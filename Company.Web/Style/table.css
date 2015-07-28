@@ -1,0 +1,21 @@
+﻿
+#tbList {
+    border: 1px solid #0094ff;
+    margin: 0px auto;
+    width: 95%;
+    border-collapse: collapse;
+}
+
+    #tbList td {
+        border: 1px solid #0094ff;
+        padding: 3px;
+        text-align:center;
+    }
+
+    #tbList th {
+        border: 1px solid #0026ff;
+        background-color:#0094ff;
+        color:#fff;
+        padding: 3px;
+        text-align:center;
+    }

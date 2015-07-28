@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>登录</title>
+    <style type="text/css">
+        #tbList {
+            border: 1px solid #0094ff;
+            margin: 50px auto;
+            width: 400px;
+            border-collapse: collapse;
+        }
+
+            #tbList td {
+                border: 1px solid #0094ff;
+                padding: 5px;
+            }
+    </style>
+    <script src="../Script/jquery-1.9.0.min.js"></script>
+    <script src="../Script/msgBox.js"></script>
+ 
+    <script type="text/javascript">
+        var msgBox = null;
+
+        $(function () {
+            //创建消息框
+            msgBox = new MsgBox({ imghref: "/images/" });
+            //验证码图片 点击 切换图片
+            $("#imgCode").click(function () {
+                this.src = "/Action/ValidCode.ashx?s=" + Math.random();
+            });
+
+            //登录按钮
+            $("#btnLogin").click(function () {
+                //1.验证
+                if (!validateInput()) return;
+                //2.提交
+                var dataStr = $("#f1").serialize();
+                $.post("/Action/User.ashx", dataStr + "&t=l", function (obj) {
+                    switch (obj.statu) {
+                        case "302":
+                            msgBox.showMsgErr(obj.msg);
+                            //模拟 验证码图片的 点击，切换 验证码
+                            $("#imgCode").click();
+                            break;
+                        case "err":
+                            msgBox.showMsgErr(obj.msg);
+                            break;
+                        case "ok":
+                            msgBox.showMsgOk(obj.msg, function () {
+                                //显示完消息后，js控制浏览器访问 消息列表页面
+                                window.location = obj.nextUrl;
+                            });
+                            break;
+                    }
+                }, "json");
+            });
+        });
+
+        //1.2验证用户数据
+        function validateInput() {
+            var isOk = true;
+            if ($("#ULoginName").val() == "" || $("#ULoginName").val().length > 20) {
+                $("#ULoginName").focus();
+                msgBox.showMsgErr("登录名不能为空，长度不能超过20");
+                isOk = false;
+            }
+            else if ($("#UPwd").val() == "" || $("#UPwd").val().length > 20) {
+                $("#UPwd").focus();
+                msgBox.showMsgErr("密码不能为空，长度不能超过20");
+                isOk = false;
+            }
+            else if ($("#UCode").val() == "") {
+                $("#UCode").focus();
+                msgBox.showMsgErr("验证码不能为空~");
+                isOk = false;
+            }
+            return isOk;
+        }
+    </script>
+</head>
+<body>
+    <form id="f1">
+        <table id="tbList">
+            <tr>
+                <td>登录名：</td>
+                <td><input type="text" id="ULoginName" name="ULoginName" value="admin" /></td>
+            </tr>
+            <tr>
+                <td>密码：</td>
+                <td><input type="password" id="UPwd" name="UPwd" value="admin" /></td>
+            </tr>
+            <tr>
+                <td>验证码：</td>
+                <td><input type="text" id="UCode" name="UCode" /> <img id="imgCode" align="middle" src="/Action/ValidCode.ashx" /></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="checkbox" id="chkAlways" name="chkAlways" />
+                    <label for="chkAlways">记住我的登录状态</label>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="button" id="btnLogin" value="登 录" style="margin-right:50px;" />
+                    <a href="Reg.html" target="_self">注 册</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

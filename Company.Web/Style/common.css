@@ -1,0 +1,62 @@
+﻿body {
+   margin:0px;
+   padding:0px;
+   font-family:微软雅黑;
+}
+#divHead {
+border:1px solid #0094ff;
+height:80px;
+width:95%;
+margin:2px auto;
+}
+
+#divBody {
+border:1px solid #0094ff;
+width:95%;
+min-height:400px;
+margin:2px auto;
+}
+
+#divLeft {
+border:1px solid #0094ff;
+width:23%;
+float:left;
+}
+
+#divRight {
+border:1px solid #0094ff;
+width:77%;
+margin-left:23%;
+height:1000px;
+}
+
+#divLeft ul {
+margin:0px;
+padding:0px;
+list-style-type:none;
+}
+#divLeft ul a{
+color:#000;
+text-decoration:none;
+}
+
+#divLeft ul a:visited{
+color:#000;
+}
+
+#divLeft ul li ul{
+margin:0px 0px 0px 10px;
+}
+
+#divLeft ul li ul li{
+margin:0px 0px 0px 10px;
+padding:3px;
+}
+
+.claTitle {
+background-color:#0094ff;
+color:#fff;
+padding:5px;
+font-size:18px;
+}
+

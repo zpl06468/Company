@@ -1,0 +1,14 @@
+F:\黑马四期\Projects\Company\Company.Web\bin\Company.Web.dll.config
+F:\黑马四期\Projects\Company\Company.Web\bin\Company.Web.dll
+F:\黑马四期\Projects\Company\Company.Web\bin\Company.Web.pdb
+F:\黑马四期\Projects\Company\Company.Web\obj\Debug\Company.Web.dll
+F:\黑马四期\Projects\Company\Company.Web\obj\Debug\Company.Web.pdb
+F:\黑马四期\Projects\Company\Company.Web\bin\Company.BLL.dll
+F:\黑马四期\Projects\Company\Company.Web\bin\Company.DAL.dll
+F:\黑马四期\Projects\Company\Company.Web\bin\Company.Model.dll
+F:\黑马四期\Projects\Company\Company.Web\bin\Company.Common.dll
+F:\黑马四期\Projects\Company\Company.Web\bin\Company.BLL.pdb
+F:\黑马四期\Projects\Company\Company.Web\bin\Company.DAL.pdb
+F:\黑马四期\Projects\Company\Company.Web\bin\Company.Model.pdb
+F:\黑马四期\Projects\Company\Company.Web\bin\Company.Common.pdb
+F:\黑马四期\Projects\Company\Company.Web\obj\Debug\Company.Web.csprojResolveAssemblyReference.cache

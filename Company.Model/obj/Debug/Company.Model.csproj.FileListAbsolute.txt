@@ -1,0 +1,5 @@
+F:\黑马四期\Projects\Company\Company.Model\bin\Debug\Company.Model.dll
+F:\黑马四期\Projects\Company\Company.Model\bin\Debug\Company.Model.pdb
+F:\黑马四期\Projects\Company\Company.Model\obj\Debug\Company.Model.dll
+F:\黑马四期\Projects\Company\Company.Model\obj\Debug\Company.Model.pdb
+F:\黑马四期\Projects\Company\Company.Model\obj\Debug\Company.Model.csprojResolveAssemblyReference.cache
