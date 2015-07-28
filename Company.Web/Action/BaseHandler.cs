@@ -66,6 +66,7 @@ namespace Company.Web.Action
 
                 }
             }
+            SonLoad();
         }
         public abstract void SonLoad();
         public bool IsReusable

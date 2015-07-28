@@ -1,7 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/View/Common.Master" AutoEventWireup="true" CodeBehind="MgrMenu.aspx.cs" Inherits="Company.Web.View.MgrMenu" %>
-<script src="../Script/jquery-1.9.0.min.js"></script>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script type="text/javascript">
+        //菜单操作的url
+        var targetUrl = "/Action/Mgr.ashx";
+        var $nowRow = null;
         $(function () {
             $("#dialogModify").dialog({
                 autoOpen: false,
@@ -9,6 +12,19 @@
                 modal: true,
                 buttons: {
                     "确定": function () {
+                        //1.提交修改数据
+                        var data = $("#fModify").serialize();
+                        alert(data);
+                        $.post(targetUrl, data + "&type=m", function (jsObj) {
+                            processData(jsObj, function () {
+                                if ($nowRow != null) {
+                                    var $tds = $nowRow.children("td");
+                                    $tds[1].innerHTML = jsObj.data.MgrName;
+                                    $tds[2].innerHTML = jsObj.data.MgrSort;
+                                    $nowRow = null;
+                                }
+                            });
+                        }, "json");
                         $(this).dialog("close");
                     },
                     "取消": function () {
@@ -17,32 +33,61 @@
                 }
             })
         });
-        function showSonMenu(id)
-        {
-            
-        }
-        function showEditPanel(mid)
-        {
-            msgBox.showMsgWait("加载中...");
-            $.get("/Action/Mgr.ashx", { type: "get", mid: mid }, function (jsObj)
-            {
-                msgBox.hidBox();
-                switch (jsObj.statu) {
-                    case "ok":
-                        $("#MgrName").val(jsObj.data.MgrName);
-                        $("#MgrSort").val(jsObj.data.MgrSort);
-                        $('#dialogModify').dialog('open');
-                        break;
-                    case "err":
-                        msgBox.showMsgErr(jsObj.msg);
-                }
-                
-            },"json")
-        }
-        function doDel(pid,btn)
-        {
+        function showSonMenu(id) {
 
         }
+        function showEditPanel(mid, btn) {
+            $nowRow = $(btn).parent().parent();
+            msgBox.showMsgWait("加载中...");
+            //$.get(targetUrl, { type: "get", mid: mid }, function (jsObj) {
+            //    msgBox.hidBox();
+            //    processData(jsObj, function () {
+            //        $("#MgrName").val(jsObj.data.MgrName);
+            //        $("#MgrSort").val(jsObj.data.MgrSort);
+            //        $("#MgrId").val(jsObj.data.MgrId);
+            //        $('#dialogModify').dialog('open');
+            //    }, function () { })
+
+            //}, "json");
+            $.ajax(targetUrl, {
+                type: "get",
+                data: { type: "get", "mid": mid },
+                dataType: "json",
+                cache: false,
+                success: function (jsObj) {
+                    msgBox.hidBox();
+                    processData(jsObj, function () {
+                        $("#MgrName").val(jsObj.data.MgrName);
+                        $("#MgrSort").val(jsObj.data.MgrSort);
+                        $("#MgrId").val(jsObj.data.MgrId);
+                        $('#dialogModify').dialog('open');
+                    });
+                }
+            });
+        }
+        function doDel(pid, btn) {
+
+        }
+        //统一处理返回的数据
+        function processData(jsObj, okFunc, errFunc) {
+            switch (jsObj.statu) {
+                case "ok":
+                    okFunc();
+                    break;
+                case "err":
+                    if (errFunc) {
+                        errFunc();
+                    }
+                    msgBox.showMsgErr(jsObj.msg);
+                    break;
+                case "np":
+                    msgBox.showMsgErr(jsObj.msg, function () {
+                        window.location = jsObj.nextUrl;
+                    });
+                    break;
+            }
+        }
+
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="placeRight" runat="server">
@@ -72,13 +117,20 @@
         </asp:Repeater>
     </table>
     <div id="dialogModify" title="修改菜单">
-        <table id="tbModify">
-            <tr>
-                <td>菜单名称</td><td><input type="text" id="MgrName" /></td>
-            </tr>
-            <tr>
-                <td>序列号</td><td><input type="text" id="MgrSort" /></td>
-            </tr>
-        </table>
+        <form id="fModify">
+            <input type="hidden" id="MgrId" name="MgrId" />
+            <table id="tbModify">
+                <tr>
+                    <td>菜单名称</td>
+                    <td>
+                        <input type="text" id="MgrName" name="MgrName" /></td>
+                </tr>
+                <tr>
+                    <td>序列号</td>
+                    <td>
+                        <input type="text" id="MgrSort" name="MgrSort" /></td>
+                </tr>
+            </table>
+        </form>
     </div>
 </asp:Content>

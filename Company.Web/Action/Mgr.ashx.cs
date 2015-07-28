@@ -21,11 +21,18 @@ namespace Company.Web.Action
                 case "get":
                     GetMenu();
                     break;
+                case "m":
+                    DoModify();
+                    break;
                 default:
                     break;
             }
         }
         BLL.MgrMenu bll = new BLL.MgrMenu();
+        #region 1.0根据id获得菜单项
+        /// <summary>
+        /// 根据id获得菜单项
+        /// </summary>
         public void GetMenu()
         {
             string strId = Request.QueryString["mid"];
@@ -37,13 +44,41 @@ namespace Company.Web.Action
             try
             {
                 Model.MgrMenu model = bll.GetModel(int.Parse(strId));
-                string strJson=DataHelper.Obj2Json(model);
+                string strJson = DataHelper.Obj2Json(model);
                 AjaxMsgHelper.AjaxMsg("ok", "加载成功", strJson);
             }
             catch (Exception ex)
             {
-                AjaxMsgHelper.AjaxMsg("err", "异常:"+ex.Message);
+                AjaxMsgHelper.AjaxMsg("err", "异常:" + ex.Message);
             }
-        }
+        } 
+        #endregion
+
+        #region 2.0执行修改操作
+        /// <summary>
+        /// 执行修改操作
+        /// </summary>
+        public void DoModify()
+        {
+            Model.MgrMenu model = new Model.MgrMenu()
+            {
+                MgrId = int.Parse(Request.Form["MgrId"]),
+                MgrName = Request.Form["MgrName"],
+                MgrSort = int.Parse(Request.Form["MgrSort"])
+            };
+
+            try
+            {
+                bll.UpdateFather(model);
+                string strJson = DataHelper.Obj2Json(model);
+                AjaxMsgHelper.AjaxMsg("ok", "修改成功",strJson);
+            }
+            catch (Exception ex)
+            {
+                AjaxMsgHelper.AjaxMsg("err", "异常"+ex.Message);
+            }
+        } 
+        #endregion
+
     }
 }
