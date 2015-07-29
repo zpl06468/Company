@@ -24,6 +24,9 @@ namespace Company.Web.Action
                 case "m":
                     DoModify();
                     break;
+                case "ms":
+                    DoModifySon();
+                    break;
                 default:
                     break;
             }
@@ -79,6 +82,26 @@ namespace Company.Web.Action
             }
         } 
         #endregion
+        public void DoModifySon()
+        {
+            Model.MgrMenu model = new Model.MgrMenu()
+            {
+                MgrId = int.Parse(Request.Form["MgrId"]),
+                MgrName = Request.Form["MgrName"],
+                MgrLinkUrl = Request.Form["MgrLinkUrl"],
+                MgrSort = int.Parse(Request.Form["MgrSort"])
+            };
 
+            try
+            {
+                bll.UpdateSon(model);
+                string strJson = DataHelper.Obj2Json(model);
+                AjaxMsgHelper.AjaxMsg("ok", "修改成功", strJson);
+            }
+            catch (Exception ex)
+            {
+                AjaxMsgHelper.AjaxMsg("err", "异常" + ex.Message);
+            }
+        }
     }
 }

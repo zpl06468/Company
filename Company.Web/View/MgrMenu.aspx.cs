@@ -16,10 +16,5 @@ namespace Company.Web.View
             this.rptList.DataSource = list;
             this.rptList.DataBind();
         }
-
-        public string IsDel(string b)
-        {
-            return b == "true" ? "是" : "否";
-        }
     }
 }
