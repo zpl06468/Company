@@ -32,6 +32,7 @@
                     }
                 }
             })
+            $("btnAdd").click(showEdit);
         });
         function showSonMenu(id) {
 
@@ -67,7 +68,10 @@
         }
         function doDel(pid, btn) {
 
-        }
+        };
+        function showEdit() {
+            $("dialogModify").dialog("open");
+        };
         //统一处理返回的数据
         function processData(jsObj, okFunc, errFunc) {
             switch (jsObj.statu) {
@@ -116,6 +120,9 @@
             </ItemTemplate>
         </asp:Repeater>
     </table>
+    <div id="oprDiv">
+        <input type="button" id="btnAdd" value="新增" />
+    </div>
     <div id="dialogModify" title="修改菜单">
         <form id="fModify">
             <input type="hidden" id="MgrId" name="MgrId" />
