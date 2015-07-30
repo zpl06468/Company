@@ -381,15 +381,17 @@ namespace Company.DAL
             {
                 StringBuilder strSql = new StringBuilder();
                 strSql.Append("insert into MgrMenu(");
-                strSql.Append("mgrName,mgrSort)");
+                strSql.Append("mgrPId,mgrName,mgrSort)");
                 strSql.Append(" values (");
-                strSql.Append("@mgrName,@mgrSort)");
+                strSql.Append("@mgrPId,@mgrName,@mgrSort)");
                 strSql.Append(";select @@IDENTITY");
                 SqlParameter[] parameters = {
+                                                new SqlParameter("@mgrPId", SqlDbType.Int,4),
                     new SqlParameter("@mgrName", SqlDbType.VarChar,50),
                     new SqlParameter("@mgrSort", SqlDbType.Int,4)};
-                parameters[0].Value = model.MgrName;
-                parameters[1].Value = model.MgrSort;
+                parameters[0].Value = model.MgrPId;
+                parameters[1].Value = model.MgrName;
+                parameters[2].Value = model.MgrSort;
                 result = Convert.ToInt32(SQLHelper.ExcuteScalar(strSql.ToString(), parameters));
             }
             catch (Exception ex)

@@ -27,6 +27,9 @@ namespace Company.Web.Action
                 case "ms":
                     DoModifySon();
                     break;
+                case "add":
+                    DoAdd();
+                    break;
                 default:
                     break;
             }
@@ -97,6 +100,26 @@ namespace Company.Web.Action
                 bll.UpdateSon(model);
                 string strJson = DataHelper.Obj2Json(model);
                 AjaxMsgHelper.AjaxMsg("ok", "修改成功", strJson);
+            }
+            catch (Exception ex)
+            {
+                AjaxMsgHelper.AjaxMsg("err", "异常" + ex.Message);
+            }
+        }
+
+        public void DoAdd()
+        {
+            Model.MgrMenu model = new Model.MgrMenu()
+            {
+                MgrPId=0,
+                MgrName = Request.Form["MgrName"],
+                MgrSort = int.Parse(Request.Form["MgrSort"])
+            };
+            try
+            {
+                bll.AddFather(model);
+                string strJson = DataHelper.Obj2Json(model);
+                AjaxMsgHelper.AjaxMsg("ok", "新增成功", strJson);
             }
             catch (Exception ex)
             {

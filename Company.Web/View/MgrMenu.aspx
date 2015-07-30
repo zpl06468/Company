@@ -12,27 +12,20 @@
                 modal: true,
                 buttons: {
                     "确定": function () {
-                        //1.提交修改数据
-                        var data = $("#fModify").serialize();
-                        alert(data);
-                        $.post(targetUrl, data + "&type=m", function (jsObj) {
-                            processData(jsObj, function () {
-                                if ($nowRow != null) {
-                                    var $tds = $nowRow.children("td");
-                                    $tds[1].innerHTML = jsObj.data.MgrName;
-                                    $tds[2].innerHTML = jsObj.data.MgrSort;
-                                    $nowRow = null;
-                                }
-                            });
-                        }, "json");
+                        if ($("#MgrId").val() == "") {
+                            doAdd();
+                        }
+                        else {
+                            doEdit();
+                        }
                         $(this).dialog("close");
                     },
                     "取消": function () {
                         $(this).dialog("close");
                     }
                 }
-            })
-            $("btnAdd").click(showEdit);
+            });
+            $("#btnAdd").click(showAdd);
         });
         function showSonMenu(id) {
 
@@ -69,6 +62,40 @@
         function doDel(pid, btn) {
 
         };
+        function doEdit()
+        {
+            //1.提交修改数据
+            var data = $("#fModify").serialize();
+
+            $.post(targetUrl, data + "&type=m", function (jsObj) {
+                processData(jsObj, function () {
+                    if ($nowRow != null) {
+                        var $tds = $nowRow.children("td");
+                        $tds[1].innerHTML = jsObj.data.MgrName;
+                        $tds[2].innerHTML = jsObj.data.MgrSort;
+                        $nowRow = null;
+                    }
+                });
+            }, "json");
+        }
+
+        function doAdd() {
+            //1.提交修改数据
+            var data = $("#fModify").serialize();
+
+            $.post(targetUrl, data + "&type=add", function (jsObj) {
+                processData(jsObj, function () {
+                    window.location.reload();
+                });
+            }, "json");
+        }
+        function showAdd()
+        {
+            $("#MgrName").val("");
+            $("#MgrSort").val("");
+            $("#MgrId").val("");
+            $("#dialogModify").dialog("open");
+        }
         function showEdit() {
             $("dialogModify").dialog("open");
         };
@@ -123,7 +150,7 @@
     <div id="oprDiv">
         <input type="button" id="btnAdd" value="新增" />
     </div>
-    <div id="dialogModify" title="修改菜单">
+    <div id="dialogModify" title="菜单操作">
         <form id="fModify">
             <input type="hidden" id="MgrId" name="MgrId" />
             <table id="tbModify">
