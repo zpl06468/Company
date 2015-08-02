@@ -124,6 +124,7 @@ namespace Company.Web.Action
             catch (Exception ex)
             {
                 AjaxMsgHelper.AjaxMsg("err", "异常" + ex.Message);
+                AjaxMsgHelper.AjaxMsg("err", "异常" + ex.Message);
             }
         }
     }
